@@ -1,0 +1,285 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Students — Roster</title>
+
+    <link rel="stylesheet" href="{% static 'css/output.css' %}" />
+    <style>
+      :root {
+        --ink: #1c2b2d;
+        --paper: #f6f4ee;
+        --card: #ffffff;
+        --line: #dcd7c9;
+        --moss: #3f6b5c;
+        --moss-dark: #2c4c41;
+        --clay: #c05b3c;
+        --clay-dark: #9c4830;
+        --muted: #7c8683;
+        --stripe: #f1efe6;
+        --radius: 10px;
+        font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        min-height: 100vh;
+        padding: 48px 20px;
+      }
+
+      .wrap {
+        width: 100%;
+        max-width: 980px;
+        margin: 0 auto;
+      }
+
+      header.page {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        border-bottom: 2px solid var(--ink);
+        padding-bottom: 14px;
+        margin-bottom: 10px;
+      }
+
+      header.page h1 {
+        font-size: 26px;
+        letter-spacing: 0.01em;
+        margin: 0;
+        font-weight: 600;
+      }
+
+      header.page .count {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 13px;
+        color: var(--muted);
+        letter-spacing: 0.03em;
+      }
+
+      .toolbar {
+        display: flex;
+        justify-content: flex-end;
+        margin: 18px 0 22px 0;
+      }
+
+      .add-link {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-weight: 600;
+        font-size: 13.5px;
+        letter-spacing: 0.02em;
+        color: #fdfbf6;
+        background: var(--moss);
+        padding: 10px 18px;
+        border-radius: 7px;
+        text-decoration: none;
+        transition: background 0.15s ease;
+      }
+      .add-link:hover {
+        background: var(--moss-dark);
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      thead th {
+        text-align: left;
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 11.5px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-weight: 600;
+        color: var(--moss-dark);
+        background: var(--stripe);
+        padding: 13px 16px;
+        border-bottom: 1.5px solid var(--line);
+      }
+
+      thead th.actions-col {
+        text-align: right;
+      }
+
+      tbody td {
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--line);
+        font-size: 14.5px;
+        vertical-align: top;
+      }
+
+      tbody tr:last-child td {
+        border-bottom: none;
+      }
+
+      tbody tr:nth-child(even) {
+        background: var(--stripe);
+      }
+
+      tbody tr:hover {
+        background: #ece8da;
+      }
+
+      td.name {
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      td.phone {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 13.5px;
+        color: #4b5654;
+        white-space: nowrap;
+      }
+
+      td.desc {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 13px;
+        color: #5a655f;
+        line-height: 1.45;
+        max-width: 280px;
+      }
+
+      td.desc.empty-cell {
+        color: var(--muted);
+        font-style: italic;
+      }
+
+      td.actions {
+        text-align: right;
+        white-space: nowrap;
+      }
+
+      td.actions a {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        text-decoration: none;
+        padding: 4px 2px;
+      }
+
+      td.actions a.edit {
+        color: var(--moss-dark);
+      }
+      td.actions a.edit:hover {
+        text-decoration: underline;
+      }
+
+      td.actions a.delete {
+        color: var(--clay-dark);
+        margin-left: 14px;
+      }
+      td.actions a.delete:hover {
+        text-decoration: underline;
+      }
+
+      .sep {
+        color: var(--line);
+        margin-left: 14px;
+      }
+
+      .empty-roster {
+        padding: 60px 20px;
+        text-align: center;
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      @media (max-width: 640px) {
+        thead {
+          display: none;
+        }
+        table,
+        tbody,
+        tr,
+        td {
+          display: block;
+          width: 100%;
+        }
+        tbody tr {
+          border-bottom: 1px solid var(--line);
+          padding: 14px 4px;
+        }
+        tbody td {
+          border-bottom: none;
+          padding: 4px 12px;
+        }
+        td.actions {
+          text-align: left;
+          margin-top: 6px;
+        }
+        td.desc {
+          max-width: none;
+        }
+      }
+    </style>
+  </head>
+  <body class="font-sans">
+    <div class="wrap">
+      <header class="page">
+        <h1>Students</h1>
+        <span class="count">{{students.count}} students</span>
+      </header>
+
+      <div class="toolbar">
+        <a class="add-link" href="{% url 'create_students' %}">Add student</a>
+      </div>
+
+      <!-- FOr messages -->
+      {% for m in messages %}
+      <p class="text-center text-xl font-bold p-2">{{m}}</p>
+      {% endfor %}
+      <div class="card">
+        <table>
+          <thead>
+            <tr>
+              <th>First name</th>
+              <th>Last name</th>
+              <th>Phone number</th>
+              <th>Description</th>
+              <th class="actions-col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for s in students %}
+            <tr>
+              <td class="name">{{s.first_name}}</td>
+              <td class="name">{{s.last_name}}</td>
+              <td class="phone">{{s.phone_number}}</td>
+              <td class="desc">{{s.description}}</td>
+              <td class="actions">
+                <a class="edit" href="{% url 'edit_student' s.id %}">Edit</a
+                ><span class="sep">|</span>
+                <a class="delete" href="{% url 'delete_student' s.id %}"
+                  >Delete</a
+                >
+              </td>
+            </tr>
+            {% endfor %} {% if students.count == 0 %}
+            <tr>
+              <td colspan="5" class="name text-center">
+                No student available yet!
+              </td>
+            </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

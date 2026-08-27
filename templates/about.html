@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Page</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <h1>Welcome TO HTML PAGE <h1>
+    <p>{{bottle}}</p>
+    <h2>The Developer's name is {{programmer_name}}</h2>
+    <h2>The Man is {{best_player}}</h2>
+    <h1>The real Goat is {{GOAT}}</h1>
+
+    {% for player in best_player %}
+    <p>{{player}} {% if player == "ororo" %}<span>GOAT</span>{% endif %}</p>
+    {% endfor %}
+
+
+    <a href="/">Homepage</a>
+</body>
+</html>

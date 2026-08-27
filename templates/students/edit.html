@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Student — {{student.first_name}}</title>
+    <style>
+      :root {
+        --ink: #1c2b2d;
+        --paper: #f6f4ee;
+        --card: #ffffff;
+        --line: #dcd7c9;
+        --moss: #3f6b5c;
+        --moss-dark: #2c4c41;
+        --clay: #c05b3c;
+        --muted: #7c8683;
+        --error: #b8443a;
+        --radius: 10px;
+        font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        min-height: 100vh;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 48px 20px;
+      }
+
+      .wrap {
+        width: 100%;
+        max-width: 900px;
+      }
+
+      header.page {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        border-bottom: 2px solid var(--ink);
+        padding-bottom: 14px;
+        margin-bottom: 28px;
+      }
+
+      header.page h1 {
+        font-size: 26px;
+        letter-spacing: 0.01em;
+        margin: 0;
+        font-weight: 600;
+      }
+
+      header.page .roll {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 13px;
+        color: var(--muted);
+        letter-spacing: 0.03em;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        justify-content: center;
+        justify-items: center;
+        gap: 28px;
+      }
+
+      @media (max-width: 720px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 28px 26px;
+        max-width: 600px;
+        width: 90%;
+      }
+
+      .card h2 {
+        font-size: 15px;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        font-weight: 600;
+        color: var(--moss-dark);
+        margin: 0 0 20px 0;
+        font-family: ui-sans-serif, system-ui, sans-serif;
+      }
+
+      .field {
+        margin-bottom: 18px;
+      }
+
+      .field label {
+        display: block;
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 12.5px;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        color: var(--ink);
+        margin-bottom: 6px;
+      }
+
+      .field label .req {
+        color: var(--clay);
+      }
+
+      .field .hint {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 11.5px;
+        color: var(--muted);
+        margin-top: 5px;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 15px;
+        padding: 11px 12px;
+        border: 1.5px solid var(--line);
+        border-radius: 7px;
+        background: var(--paper);
+        color: var(--ink);
+        transition:
+          border-color 0.15s ease,
+          box-shadow 0.15s ease,
+          background 0.15s ease;
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 88px;
+        line-height: 1.45;
+      }
+
+      input:hover,
+      textarea:hover {
+        border-color: #b9b2a0;
+      }
+
+      input:focus,
+      textarea:focus {
+        outline: none;
+        border-color: var(--moss);
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(63, 107, 92, 0.15);
+      }
+
+      .field.invalid input,
+      .field.invalid textarea {
+        border-color: var(--error);
+        background: #fdf3f1;
+      }
+
+      .field .error-msg {
+        display: none;
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 11.5px;
+        color: var(--error);
+        margin-top: 5px;
+      }
+
+      .field.invalid .error-msg {
+        display: block;
+      }
+      .field.invalid .hint {
+        display: none;
+      }
+
+      .row2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      button.submit {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        letter-spacing: 0.02em;
+        background: var(--moss);
+        color: #fdfbf6;
+        border: none;
+        padding: 12px 22px;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          background 0.15s ease,
+          transform 0.1s ease;
+      }
+
+      button.submit:hover {
+        background: var(--moss-dark);
+      }
+      button.submit:active {
+        transform: translateY(1px);
+      }
+
+      button.reset {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 13px;
+        color: var(--muted);
+        background: none;
+        border: none;
+        cursor: pointer;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      button.reset:hover {
+        color: var(--ink);
+      }
+
+      .confirm {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 13px;
+        color: var(--moss-dark);
+        margin-top: 14px;
+        opacity: 0;
+        transform: translateY(-4px);
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease;
+      }
+      .confirm.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Roster */
+      .roster h2 {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+
+      .count {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-weight: 400;
+        color: var(--muted);
+        text-transform: none;
+        letter-spacing: 0;
+        font-size: 12px;
+      }
+
+      .empty {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 13.5px;
+        color: var(--muted);
+        padding: 20px 4px;
+        border: 1px dashed var(--line);
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      ul.roster-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-height: 520px;
+        overflow-y: auto;
+      }
+
+      .student {
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--moss);
+        border-radius: 7px;
+        padding: 12px 14px;
+        background: var(--paper);
+        animation: enter 0.3s ease;
+        position: relative;
+      }
+
+      @keyframes enter {
+        from {
+          opacity: 0;
+          transform: translateY(-6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .student .name {
+        font-weight: 600;
+        font-size: 15px;
+      }
+
+      .student .meta {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 12.5px;
+        color: var(--muted);
+        margin-top: 3px;
+      }
+
+      .student .desc {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 12.5px;
+        color: #4b5654;
+        margin-top: 6px;
+        line-height: 1.4;
+      }
+
+      .student .remove {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--muted);
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 12px;
+      }
+      .student .remove:hover {
+        color: var(--error);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .student {
+          animation: none;
+        }
+        .confirm {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="page">
+        <h1>Edit Student</h1>
+        <span class="roll" id="today"></span>
+      </header>
+
+      <div class="grid">
+        <div class="card">
+          <h2>Student details</h2>
+          <form id="studentForm" action="" method="POST">
+            {% csrf_token %} {% for message in messages %}
+            <p>{{message}}</p>
+            {% endfor %}
+            <div class="row2">
+              <div class="field" id="field-first">
+                <label for="firstName"
+                  >First name <span class="req">*</span></label
+                >
+                <input
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  autocomplete="given-name"
+                  placeholder="Ada"
+                  value="{{student.first_name}}"
+                />
+                <div class="hint">As it appears on records</div>
+                <div class="error-msg">Enter a first name</div>
+              </div>
+
+              <div class="field" id="field-last">
+                <label for="lastName"
+                  >Last name <span class="req">*</span></label
+                >
+                <input
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  autocomplete="family-name"
+                  placeholder="Lovelace"
+                  value="{{student.last_name}}"
+                />
+                <div class="hint">&nbsp;</div>
+                <div class="error-msg">Enter a last name</div>
+              </div>
+            </div>
+
+            <div class="field" id="field-phone">
+              <label for="phone">Phone number <span class="req">*</span></label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                autocomplete="tel"
+                placeholder="+234 801 234 5678"
+                inputmode="tel"
+                value="{{student.phone_number}}"
+              />
+              <div class="hint">Include country code if outside Nigeria</div>
+              <div class="error-msg">Enter a valid phone number</div>
+            </div>
+
+            <div class="field" id="field-desc">
+              <label for="description">Description</label>
+              <textarea
+                id="description"
+                name="description"
+                placeholder="Grade, program, notes…"
+              >
+{{student.description}}</textarea
+              >
+              <div class="hint">
+                Optional — grade level, program, or anything worth flagging
+              </div>
+            </div>
+
+            <div class="actions">
+              <button type="submit" class="submit">Update student</button>
+              <button type="button" class="reset" id="clearForm">
+                Clear form
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Add Post</title>
+</head>
+<body>
+
+    <div>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{post_form.as_p}}
+
+            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium p-3 rounded-lg transition duration-200 mt-2" type="submit">Submit</button>
+
+        </form>
+    </div>
+    
+</body>
+</html>

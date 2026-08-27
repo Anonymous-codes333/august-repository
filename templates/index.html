@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Index Page</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+</head>
+
+<body>
+    <h1>Welcome to my HTML RENDERING</h1>
+    <p>{{taofeek}}</p>
+    <a href="./about">About Page</a><br>
+    <a href="{% url 'about' %}">About my page</a>
+    <a href="{% url 'posts' %}">Posts</a>
+    <a href="{% url 'create_user' %}">Create Account</a>
+
+    <img src="../static/images/4b73d1f2f73374e649243a3cd9d42a9f.jpg" alt="Goat Image" style: width="100%" height="100%">
+    
+</body>
+</html>

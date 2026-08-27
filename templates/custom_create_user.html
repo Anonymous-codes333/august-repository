@@ -1,0 +1,77 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Custom Create User</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}" />
+  </head>
+  <body>
+    <div class="font-sans p-5 h-screen w-full fixed">
+      <form
+        class="absolute left-1/2 top-1/2 -translate-1/2 grid gap-2 shadow-2xl w-8/10 max-w-120 p-5"
+        action=""
+        method="post"
+      >
+        {% csrf_token %}
+        <h1 class="font-bold text-center">User Creation Form</h1>
+        {% for message in messages %}<br />
+        {% if message.tags == "success" %}
+        <p class="bg-green-700 p-2 text-white text-center">{{message}}</p>
+        {% else %}
+        <p class="bg-red-700 p-2 text-white text-center">{{message}}</p>
+        {% endif %} <br />
+        {% endfor %}
+        <label for="username">
+          <span>Username: </span>
+          <span>
+            <input
+              name="username"
+              type="text"
+              id="username"
+              placeholder="Enter username"
+            />
+          </span>
+        </label>
+        <label for="email">
+          <span>Email: </span>
+          <span>
+            <input
+              name="email"
+              type="email"
+              id="email"
+              placeholder="Enter email"
+            />
+          </span>
+        </label>
+        <label for="password">
+          <span>Password: </span>
+          <span>
+            <input
+              name="password"
+              type="password"
+              id="password"
+              placeholder="Enter Password"
+            />
+          </span>
+        </label>
+        <label for="confirm_password">
+          <span>Confirm Password: </span>
+          <span>
+            <input
+              name="confirm_password"
+              type="password"
+              id="confirm_password"
+              placeholder="Confirm Password"
+            />
+          </span>
+        </label>
+        <button class="bg-green-700 text-white p-2" type="submit">
+          Submit
+        </button>
+      </form>
+      <p>Already HAve an account <a class="text-blue-800" href="{% url 'login' %}">Login</a></p>
+    </div>
+  </body>
+</html>

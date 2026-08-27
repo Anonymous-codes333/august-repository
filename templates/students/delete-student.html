@@ -1,0 +1,165 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Delete student — {{student.last_name}} {{student.first_name}}</title>
+
+    <link rel="stylesheet" href="{% static 'css/output.css' %}" />
+    <style>
+      :root {
+        --ink: #1c2b2d;
+        --paper: #f6f4ee;
+        --card: #ffffff;
+        --line: #dcd7c9;
+        --moss: #3f6b5c;
+        --muted: #7c8683;
+        --clay: #c05b3c;
+        --clay-dark: #9c4830;
+        --clay-wash: #fbeee9;
+        --radius: 12px;
+        font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 460px;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 36px 34px 30px 34px;
+        text-align: center;
+      }
+
+      .mark {
+        width: 52px;
+        height: 52px;
+        margin: 0 auto 20px auto;
+        border-radius: 50%;
+        background: var(--clay-wash);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .mark svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      h1 {
+        font-size: 21px;
+        font-weight: 600;
+        margin: 0 0 10px 0;
+      }
+
+      p.body-text {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 14px;
+        line-height: 1.55;
+        color: #4b5654;
+        margin: 0 0 6px 0;
+      }
+
+      .student-name {
+        font-weight: 600;
+        color: var(--ink);
+      }
+
+      .warning {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 12.5px;
+        color: var(--clay-dark);
+        margin: 14px 0 28px 0;
+      }
+
+      .actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      a.btn,
+      .btn {
+        flex: 1;
+        display: block;
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        padding: 12px 0;
+        border-radius: 7px;
+        transition:
+          background 0.15s ease,
+          border-color 0.15s ease;
+      }
+
+      a.btn.cancel {
+        color: var(--ink);
+        background: var(--paper);
+        border: 1.5px solid var(--line);
+      }
+      a.btn.cancel:hover {
+        background: #ece8da;
+      }
+
+      .btn.confirm {
+        color: #fdfbf6;
+        background: var(--clay);
+        border: 1.5px solid var(--clay);
+      }
+      .btn.confirm:hover {
+        background: var(--clay-dark);
+        border-color: var(--clay-dark);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="mark">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M12 9V13M12 17H12.01M10.29 3.86L1.82 18A2 2 0 0 0 3.54 21H20.46A2 2 0 0 0 22.18 18L13.71 3.86A2 2 0 0 0 10.29 3.86Z"
+            stroke="#9c4830"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+
+      <h1>Delete this student?</h1>
+      <p class="body-text">
+        You're about to remove
+        <span class="student-name"
+          >{{student.last_name}} {{student.first_name}}</span
+        >
+        from the roster.
+      </p>
+      <p class="warning">This can't be undone.</p>
+
+      <div class="grid grid-cols-2 gap-4">
+        <a class="btn cancel" href="{% url 'student_list' %}">Cancel</a>
+        <form class="w-full grid" action="" method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn confirm">Delete</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

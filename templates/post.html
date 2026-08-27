@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}" />
+</head>
+<body>
+    <article class="card">
+      <div class="card-image">
+        <img src="https://images.pexels.com/photos/38259971/pexels-photo-38259971.jpeg" alt="Ocean beach scenery">
+      </div>
+      <div class="card-content">
+        <span class="card-tag">Travel</span>
+        <a href="{% url 'posts' %}">GO BACK</a>
+        <h2 class="card-title">{{post.name}}</h2>
+        <p class="card-description">{{post.body | truncatewords:15}}</p>
+        <a href="#" class="card-btn">Read More</a>
+      </div>
+      <div class="author">
+        <span>By Known</span>
+        <span>{{post.date}}</span>
+      </div>
+    </article>
+
+
+    <article class="card">
+      <div class="card-image">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsjsx_9T12cwSKzt6wSX6kg1ip7sYjNezp3ZyzVSqZXmrxwa4lKn01AnH8&s=10" alt="Healthy salad bowl">
+      </div>
+      <div class="card-content">
+        <span class="card-tag">Lifestyle</span>
+        <a href="{% url 'posts' %}">GO BACK</a>
+        <h2 class="card-title">{{post.name}}</h2>
+        <p class="card-description">{{post.body | truncatewords:15}}</p>
+        <a href="#" class="card-btn">Read More</a>
+      </div>
+
+      <div class="author">
+        <span>By Known</span>
+        <span>{{post.date}}</span>
+      </div>
+
+      <article class="card">
+      <div class="card-image">
+        <img src="https://uaspectr.com/wp-content/uploads/2021/03/1590125692_04-laptop-for-coding.jpg" alt="Laptop showing code">
+      </div>
+      <div class="card-content">
+        <span class="card-tag">Technology</span>
+        <a href="{% url 'posts' %}">GO BACK</a>
+        <h2 class="card-title">{{post.name}}</h2>
+        <p class="card-description">{{post.body | truncatewords:15}}</p>
+        <a href="#" class="card-btn">Read More</a>
+      </div>
+      <div class="author">
+        <span>By Known</span>
+        <span>{{post.date}}</span>
+      </div>
+    </article>
+
+
+    
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      .errorlist {
+        color: red;
+      }
+      .message {
+        padding: 5px;
+        color: aliceblue;
+        background-color: blue;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      {% for message in messages %}
+      <p class="message">{{message}}</p>
+      {% endfor %}
+      <h2>{{form_name}}</h2>
+      <form action="" method="POST">
+        {% csrf_token %}<br />
+        {{form}}
+        <button type="submit">Create Account</button>
+      </form>
+    </div>
+  </body>
+</html>
