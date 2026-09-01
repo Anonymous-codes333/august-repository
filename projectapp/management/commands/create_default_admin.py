@@ -16,7 +16,7 @@ class Command(BaseCommand):
 
         else:
 
-            admin_user = User.objects.create_superuser(username=self.admin_username, password=self.admin_password, email=None)
+            admin_user = User.objects.create_superuser(username=str(self.admin_username), password=str(self.admin_password), email=None)
 
             self.stdout.write(self.style.SUCCESS(f"Admin with username {admin_user.username}has been created"))
 
